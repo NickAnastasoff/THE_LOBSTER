@@ -36,7 +36,7 @@ THE_LOBSTER collects sensor data from a drifter, sends it via LoRa to a base sta
 ### 2. Data Processing
 - [ ] **Sensor Data Logging**  
   - [ ] Develop data logging system on the drifter to collect sensor readings.
-  - [ ] Add timestamp to each data entry (excluding GPS data).
+  - [ ] Add timestamp to each data entry.
 
 - [ ] **Data Compression**  
   - [ ] Implement data compression techniques to reduce data size before transmission.
