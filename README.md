@@ -46,7 +46,7 @@ THE_LOBSTER collects sensor data from a drifter, sends it via LoRa to a base sta
 - [ ] **Establish LoRa Communication**  
   - [ ] Configure base station to receive data from the drifter.
   - [ ] Develop a protocol for reliable data transfer.
-  - [ ] Set up an acknowledgment system to ensure no data is lost.
+  - [ ] Set up an acknowledgment system to ensure no data is lost. 
 
 - [ ] **Data Storage at Base Station**  
   - [ ] Implement a database or file storage system at the base station.
@@ -70,5 +70,5 @@ THE_LOBSTER collects sensor data from a drifter, sends it via LoRa to a base sta
 ### 5. Power Management
 - [ ] **Optimize Power Consumption of Drifter**  
   - [ ] Implement low-power modes for sensors and microcontroller.
-  - [ ] Set up solar charging if applicable.
+  - [ ] Set up solar charging.
   - [ ] Schedule data readings and transmissions to conserve power.
