@@ -1,0 +1,3 @@
+https://docs.sparkfun.com/SparkFun_LoRaSerial
+https://github.com/sparkfun/SparkFun_LoRaSerial
+https://github.com/sparkfun/SparkFun_LoRaSerial_Arduino_Library
