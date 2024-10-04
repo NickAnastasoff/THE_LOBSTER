@@ -10,9 +10,9 @@ THE_LOBSTER collects sensor data from a drifter, sends it via LoRa to a base sta
   - [x] Integrate EC sensor.
   - [x] Develop code for reading EC values.
 
-- [ ] **Get pH readings**  
+- [x] **Get pH readings**  
   - [x] Integrate pH sensor.
-  - [ ] Develop code for reading pH values.
+  - [x] Develop code for reading pH values.
 
 - [ ] **Get gyroscope and accelerometer readings for wave height**  
   - [ ] Integrate a gyroscope and accelerometer (IMU).
@@ -35,8 +35,8 @@ THE_LOBSTER collects sensor data from a drifter, sends it via LoRa to a base sta
 
 ### 2. Data Processing
 - [ ] **Sensor Data Logging**  
-  - [ ] Develop data logging system on the drifter to collect sensor readings.
-  - [ ] Add timestamp to each data entry.
+  - [x] Develop data logging system on the drifter to collect sensor readings.
+  - [x] Add timestamp to each data entry.
 
 - [ ] **Data Compression**  
   - [ ] Implement data compression techniques to reduce data size before transmission.
