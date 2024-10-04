@@ -1,6 +1,6 @@
 /* 
-This modified code logs pH and EC readings to a micro SD card with timestamps.
-It uses an RTC module for accurate timekeeping.
+This modified code logs pH and EC readings to a micro SD card with timestamps based on elapsed time.
+It removes the RTC module dependencies.
 */
 
 #include <Ezo_i2c.h>        // Include the EZO I2C library from https://github.com/Atlas-Scientific/Ezo_I2c_lib
@@ -9,7 +9,6 @@ It uses an RTC module for accurate timekeeping.
 #include <Ezo_i2c_util.h>   // Brings in common print statements
 #include <SD.h>             // Include the SD library
 #include <SPI.h>            // Include the SPI library
-#include <RTClib.h>         // Include the RTC library
 
 Ezo_board PH = Ezo_board(99, "PH");   // Create a PH circuit object with address 99 and name "PH"
 Ezo_board EC = Ezo_board(100, "EC");  // Create an EC circuit object with address 100 and name "EC"
@@ -19,12 +18,10 @@ void step2();
 
 Sequencer2 Seq(&step1, 1000, &step2, 0);  // Calls the steps in sequence with time in between them
 
-int PH_led = 8;   // Define pin for pH LED (reassigned from 10 to 8)
+int PH_led = 8;   // Define pin for pH LED
 int EC_led = 9;   // Define pin for EC LED
 
 const int chipSelect = 10;  // SD card CS pin
-
-RTC_DS1307 rtc;  // RTC object
 
 void setup() {
   pinMode(PH_led, OUTPUT);   // Set pin of pH LED as output
@@ -42,18 +39,6 @@ void setup() {
   }
   Serial.println("SD card initialized.");
 
-  // Initialize the RTC
-  if (!rtc.begin()) {
-    Serial.println("Couldn't find RTC");
-    while (1);
-  }
-
-  if (!rtc.isrunning()) {
-    Serial.println("RTC is NOT running!");
-    // Set the RTC to the date & time this sketch was compiled
-    rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
-  }
-
   Seq.reset();  // Initialize the sequencer
 }
 
@@ -69,8 +54,14 @@ void step1() {
 }
 
 void step2() {
-  // Get the current time
-  DateTime now = rtc.now();
+  // Get the elapsed time since the Arduino started in milliseconds
+  unsigned long elapsedMillis = millis();
+
+  // Convert milliseconds to seconds, minutes, hours, etc., if needed
+  unsigned long totalSeconds = elapsedMillis / 1000;
+  unsigned long hours = totalSeconds / 3600;
+  unsigned long minutes = (totalSeconds % 3600) / 60;
+  unsigned long seconds = totalSeconds % 60;
 
   // Open the file on the SD card
   File dataFile = SD.open("datalog.txt", FILE_WRITE);
@@ -78,18 +69,13 @@ void step2() {
   // Check if the file is available
   if (dataFile) {
     // Write timestamp to the SD card
-    dataFile.print(now.year(), DEC);
-    dataFile.print('/');
-    dataFile.print(now.month(), DEC);
-    dataFile.print('/');
-    dataFile.print(now.day(), DEC);
-    dataFile.print(' ');
-    dataFile.print(now.hour(), DEC);
-    dataFile.print(':');
-    dataFile.print(now.minute(), DEC);
-    dataFile.print(':');
-    dataFile.print(now.second(), DEC);
-    dataFile.print(", ");
+    dataFile.print("Time Elapsed: ");
+    dataFile.print(hours);
+    dataFile.print("h:");
+    dataFile.print(minutes);
+    dataFile.print("m:");
+    dataFile.print(seconds);
+    dataFile.print("s, ");
 
     // Get and log pH reading
     receive_and_print_reading(PH);  // Get the reading from the PH circuit
