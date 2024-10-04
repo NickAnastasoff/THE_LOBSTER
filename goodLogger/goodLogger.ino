@@ -70,4 +70,5 @@ void step2(){
   logger.add(EC.get_last_received_reading());
   logger.add(PH.get_last_received_reading());
   logger.endline();
+  logger.close();
 }
