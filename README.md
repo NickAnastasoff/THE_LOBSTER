@@ -20,13 +20,18 @@ THE_LOBSTER collects sensor data from a drifter, sends it via LoRa to a base sta
   - [ ] Implement calculations to determine wave height based on sensor data.
   - [ ] Apply filtering techniques to reduce noise and enhance accuracy of wave height detection.
 
-- [ ] **Get temperature readings**  
-  - [ ] Integrate temperature sensor.
-  - [ ] Develop code for reading temperature values.
+- [ ] **Get wattage from solar**  
+  - [ ] Integrate a solar power
+  - [ ] Wire solar to data pins on arduino
+  - [x] Develop code for reading wattage values.
+
+- [x] **Get temperature readings**  
+  - [x] Integrate temperature sensor.
+  - [x] Develop code for reading temperature values.
 
 - [ ] **Get flood sensor readings**  
   - [ ] Integrate a flood (water level) sensor.
-  - [ ] Develop code for detecting flood or presence of water.
+  - [x] Develop code for detecting flood or presence of water.
 
 - [ ] **Get LoRa readings**  
   - [ ] Set up LoRa module for wireless data transmission.
@@ -36,11 +41,7 @@ THE_LOBSTER collects sensor data from a drifter, sends it via LoRa to a base sta
 ### 2. Data Processing
 - [ ] **Sensor Data Logging**  
   - [x] Develop data logging system on the drifter to collect sensor readings.
-  - [x] Add timestamp to each data entry.
-
-- [ ] **Data Compression**  
-  - [ ] Implement data compression techniques to reduce data size before transmission.
-  - [ ] Evaluate lightweight compression algorithms for efficient data handling.
+  - [ ] Add timestamp to each data entry.
 
 ### 3. Base Station Communication
 - [ ] **Establish LoRa Communication**  
@@ -52,20 +53,17 @@ THE_LOBSTER collects sensor data from a drifter, sends it via LoRa to a base sta
   - [ ] Implement a database or file storage system at the base station.
   - [ ] Add routines to handle data buffering and prevent overflow.
 
-### 4. Cloud Integration
-- [ ] **Use Blynk for Data Visualization**  
-  - [ ] Set up a Blynk project to visualize data collected from the drifter.
+### 4. Website Integration
+- [ ] **Use PHP for Data Visualization**  
+  - [ ] Set up a PHP website to display data collected from the drifter.
   - [ ] Use charts and gauges to display EC, pH, temperature, and wave height data.
   - [ ] Add features for historical data view and analysis.
 
-- [ ] **Make MQTT API for Data Transfer**  
-  - [ ] Develop an MQTT API for the base station to communicate with Blynk and the website.
-  - [ ] Ensure MQTT API supports secure and reliable data upload.
-  - [ ] Add functionality for real-time data retrieval and efficient data transfer.
-
-- [ ] **Data Upload System**  
-  - [ ] Write code at the base station to periodically upload data to the cloud using MQTT.
-  - [ ] Handle network outages with retry mechanisms to ensure data reliability.
+- [ ] **Drifter API**  
+  - [ ] Write code on the drifter to update settings on card.
+  - [ ] Write code on the drifter to send data via lora.
+  - [ ] Write code on the drifter to listen for updates via lora.
+  - [ ] Write code on the base station to send requests to drifter via lora.
 
 ### 5. Power Management
 - [ ] **Optimize Power Consumption of Drifter**  
