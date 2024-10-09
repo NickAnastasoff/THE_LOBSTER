@@ -76,4 +76,11 @@ void step2(){
   Serial.println(TM.get_last_received_reading());
 
   Serial.println("--------");
+
+  logger.begin();
+  logger.add(EC.get_last_received_reading());
+  logger.add(PH.get_last_received_reading());
+  logger.add(TM.get_last_received_reading());
+  logger.endline();
+  logger.close();
 }
