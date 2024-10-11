@@ -1,3 +1,2 @@
-https://docs.sparkfun.com/SparkFun_LoRaSerial
-https://github.com/sparkfun/SparkFun_LoRaSerial
-https://github.com/sparkfun/SparkFun_LoRaSerial_Arduino_Library
+https://learn.sparkfun.com/tutorials/sparkfun-explorable-hookup-guide/all
+https://www.thethingsnetwork.org/docs/
