@@ -1,0 +1,4 @@
+https://github.com/Seeed-Studio/Seeed_Arduino_LSM6DS3
+https://github.com/sparkfun/Arduino_Apollo3?tab=readme-ov-file#installation - LoRa board
+https://cdn.sparkfun.com/assets/learn_tutorials/1/4/9/4/BasicMAC.zip - LoRa basic mac
+https://github.com/jgromes/RadioLib/archive/refs/heads/master.zip - LoRa radiolib
