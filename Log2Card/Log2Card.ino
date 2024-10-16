@@ -13,60 +13,44 @@ Once you have uploaded the code to your Arduino, open the serial monitor, set th
 #include <sequencer2.h> //imports a 2 function sequencer 
 #include <Ezo_i2c_util.h> //brings in common print statements
 #include "logger.h"
+#include "DigitalConditionSensor.h"
 
 Logger logger = Logger(10, "values.csv");
 Ezo_board PH = Ezo_board(99, "PH");       //create a PH circuit object, who's address is 99 and name is "PH"
 Ezo_board EC = Ezo_board(100, "EC");      //create an EC circuit object who's address is 100 and name is "EC"
 Ezo_board TM = Ezo_board(102, "TM");      //create an TM circuit object who's address is 102 and name is "TM"
+DigitalConditionSensor floodSensor("FloodSensor", 9); //create a flood detection sensor object on pin 13
 
 void step1();  //forward declarations of functions to use them in the sequencer before defining them
 void step2();
 
 Sequencer2 Seq(&step1, 1000, &step2, 0);  //calls the steps in sequence with time in between them
 
-int PH_led = 10;                           //define pin for pH led
-int EC_led = 9;                           //define pin for EC led
-
 void setup() {
-  pinMode(PH_led, OUTPUT);                //set pin of pH led as output
-  pinMode(EC_led, OUTPUT);                //set pin for EC led as output
-
   Wire.begin();                           //start the I2C
   Serial.begin(9600);                     //start the serial communication to the computer
   Seq.reset();                            //initialize the sequencer
 }
 
 void loop() {
-  Seq.run();                              //run the sequncer to do the polling
+  Seq.run();                              //run the sequencer to do the polling
 }
 
-void step1(){
+void step1() {
    //send a read command. we use this command instead of PH.send_cmd("R"); 
   //to let the library know to parse the reading
   PH.send_read_cmd();                      
   EC.send_read_cmd();
   TM.send_read_cmd();
+  floodSensor.send_read_cmd();            // Send a read command to the flood detection sensor
 }
-void step2(){
+
+void step2() {
   receive_and_print_reading(PH);             // Get the reading from the PH circuit
-  if(PH.get_last_received_reading() > 10) {  // Test condition against pH reading
-    digitalWrite(PH_led,HIGH);               // If condition true, LED on
-  }
-  else{
-    digitalWrite(PH_led,LOW);                // If condition false, LED off
-  }
-  Serial.print("  ");
-
   receive_and_print_reading(EC);             // Get the reading from the EC circuit
-  if (EC.get_last_received_reading() > 500.00) {  // Test condition against EC reading
-    digitalWrite(EC_led,HIGH);                    // If condition true, LED on
-  }
-  else{
-    digitalWrite(EC_led,LOW);                     // If condition false, LED off
-  }    
+  receive_and_print_reading(TM);             // Get the reading from the TM circuit
 
-  receive_and_print_reading(TM);             // **Add this line to receive and parse TM data**
-
+  // Print readings to serial monitor
   Serial.println();
   Serial.println("EC");
   Serial.println(EC.get_last_received_reading());
@@ -74,13 +58,17 @@ void step2(){
   Serial.println(PH.get_last_received_reading());
   Serial.println("TM");
   Serial.println(TM.get_last_received_reading());
+  Serial.print("Flood Sensor: ");
+  Serial.println(floodSensor.get_last_received_reading() ? "HIGH" : "LOW");
 
   Serial.println("--------");
 
+  // Log readings
   logger.begin();
   logger.add(EC.get_last_received_reading());
   logger.add(PH.get_last_received_reading());
   logger.add(TM.get_last_received_reading());
+  logger.add(floodSensor.get_last_received_reading() ? "HIGH" : "LOW");
   logger.endline();
   logger.close();
 }
