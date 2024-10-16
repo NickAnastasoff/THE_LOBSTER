@@ -5,6 +5,11 @@ $data = array_map('str_getcsv', file('test_data/fake_data.csv'));
 // Extract headers
 $headers = array_shift($data);
 
+// Convert Flood Detection from Yes/No to 1/0
+foreach ($data as &$row) {
+    $row[5] = strtolower($row[5]) === 'yes' ? 1 : 0;
+}
+
 // Prepare data for the default chart (e.g., temperature)
 $dataPoints = [];
 foreach ($data as $row) {
@@ -92,30 +97,15 @@ function getDataPoints(data, columnIndex) {
         <option value="1">Temperature (C)</option>
         <option value="2">pH</option>
         <option value="3">Salinity (ppt)</option>
-        <option value="4">Wattage (W)</option>
+        <option value="4">Accelerometer (M)</option>
     </select>
 
     <div id="chartContainer" style="height: 400px; width: 90%; margin: 0 auto; padding: 20px;"></div>
     <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 
-    <h2 style="text-align: center; padding-top: 20px;">Raw Data Table</h2>
-    <table style="width: 90%; margin: 0 auto; border-collapse: collapse; color: #ffffff; text-align: center;">
-        <thead>
-            <tr>
-                <?php foreach ($headers as $header): ?>
-                    <th style="border: 1px solid #555; padding: 10px;"><?php echo htmlspecialchars($header); ?></th>
-                <?php endforeach; ?>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($data as $row): ?>
-                <tr>
-                    <?php foreach ($row as $cell): ?>
-                        <td style="border: 1px solid #555; padding: 10px;"><?php echo htmlspecialchars($cell); ?></td>
-                    <?php endforeach; ?>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+    <!-- Option to download CSV -->
+    <div style="text-align: center; padding: 20px;">
+        <a href="download.php" style="background-color: #333; color: #ffffff; padding: 10px 20px; text-decoration: none; border: 1px solid #555;">Download CSV Data</a>
+    </div>
 </body>
 </html>
