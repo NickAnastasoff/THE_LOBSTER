@@ -15,8 +15,8 @@ THE_LOBSTER collects sensor data from a drifter, sends it via LoRa to a base sta
   - [x] Develop code for reading pH values.
 
 - [ ] **Get gyroscope and accelerometer readings for wave height**  
-  - [ ] Integrate a gyroscope and accelerometer (IMU).
-  - [ ] Develop code for collecting IMU data.
+  - [x] Integrate a gyroscope and accelerometer (IMU).
+  - [x] Develop code for collecting IMU data.
   - [ ] Implement calculations to determine wave height based on sensor data.
   - [ ] Apply filtering techniques to reduce noise and enhance accuracy of wave height detection.
 
@@ -29,8 +29,8 @@ THE_LOBSTER collects sensor data from a drifter, sends it via LoRa to a base sta
   - [x] Integrate temperature sensor.
   - [x] Develop code for reading temperature values.
 
-- [ ] **Get flood sensor readings**  
-  - [ ] Integrate a flood (water level) sensor.
+- [x] **Get flood sensor readings**  
+  - [x] Integrate a flood (water level) sensor.
   - [x] Develop code for detecting flood or presence of water.
 
 - [ ] **Get LoRa readings**  
@@ -39,9 +39,9 @@ THE_LOBSTER collects sensor data from a drifter, sends it via LoRa to a base sta
   - [ ] Optimize power consumption for LoRa module.
 
 ### 2. Data Processing
-- [ ] **Sensor Data Logging**  
+- [x] **Sensor Data Logging**  
   - [x] Develop data logging system on the drifter to collect sensor readings.
-  - [ ] Add timestamp to each data entry.
+  - [x] Add timestamp to each data entry.
 
 ### 3. Base Station Communication
 - [ ] **Establish LoRa Communication**  
