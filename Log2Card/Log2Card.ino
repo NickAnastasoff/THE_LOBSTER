@@ -42,54 +42,34 @@ void step1() {
 }
 
 void step2() {
-  float temp_hum_val[2] = {0};
-  if (!dht.readTempAndHumidity(temp_hum_val)) {
-    // Log readings for air temperature and humidity
-    logger.begin();
-    logger.add("air Temperature: ");
-    logger.add(temp_hum_val[1]);
-    logger.add("air Humidity: ");
-    logger.add(temp_hum_val[0]);
-    logger.endline();
-    logger.close();
-
-    Serial.print("Humidity: ");
-    Serial.print(temp_hum_val[0]);
-    Serial.print(" %\t");
-    Serial.print("Temperature: ");
-    Serial.print(temp_hum_val[1]);
-    Serial.println(" *C");
-  } else {
-    Serial.println("Failed to get temperature and humidity value.");
-  }
-
   receive_and_print_reading(PH);             // Get the reading from the PH circuit
   receive_and_print_reading(EC);             // Get the reading from the EC circuit
   receive_and_print_reading(TM);             // Get the reading from the TM circuit
 
   // Print readings to serial monitor
-  Serial.println();
-  Serial.println("EC");
-  Serial.println(EC.get_last_received_reading());
-  Serial.println("PH");
-  Serial.println(PH.get_last_received_reading());
-  Serial.println("TM");
-  Serial.println(TM.get_last_received_reading());
-  Serial.print("Flood Sensor: ");
-  Serial.println(floodSensor.get_last_received_reading() ? "HIGH" : "LOW");
+  // Serial.println();
+  // Serial.println("EC");
+  // Serial.println(EC.get_last_received_reading());
+  // Serial.println("PH");
+  // Serial.println(PH.get_last_received_reading());
+  // Serial.println("TM");
+  // Serial.println(TM.get_last_received_reading());
+  // Serial.print("Flood Sensor: ");
+  // Serial.println(floodSensor.get_last_received_reading() ? "HIGH" : "LOW");
+  // Serial.println("--------");
 
-  Serial.println("--------");
-
-  // Log readings prefixed by "air"
   logger.begin();
-  logger.add("air EC: ");
   logger.add(EC.get_last_received_reading());
-  logger.add("air PH: ");
   logger.add(PH.get_last_received_reading());
-  logger.add("air TM: ");
   logger.add(TM.get_last_received_reading());
-  logger.add("air Flood Sensor: ");
   logger.add(floodSensor.get_last_received_reading() ? "HIGH" : "LOW");
+    float temp_hum_val[2] = {0};
+  if (!dht.readTempAndHumidity(temp_hum_val)) {
+    logger.add(temp_hum_val[1]);//air Temperature
+    logger.add(temp_hum_val[0]);//air Humidity
+  } else {
+    Serial.println("Failed to get temperature and humidity value.");
+  }
   logger.endline();
   logger.close();
 }
