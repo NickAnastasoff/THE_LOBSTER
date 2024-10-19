@@ -1,6 +1,5 @@
 #define RXD1 18
 #define TXD1 17
-#include <HardwareSerial.h>
 
 void setup() {
   Serial.begin(9600);

@@ -43,25 +43,19 @@ void read() {
   EC.send_read_cmd();
   TM.send_read_cmd();
   floodSensor.send_read_cmd();    
-     rtc.updateTime();  
+  rtc.updateTime();  
 }
 
 void log() {
   float temp_hum_val[2] = {0};
   dht.readTempAndHumidity(temp_hum_val);
 
-  logger.begin();
-
   String currentDate = rtc.stringDateUSA(); // Get the current date in mm/dd/yyyy format
   String currentTime = rtc.stringTime();    // Get the current time in hh:mm:ss format
   String dateTime = currentDate + " " + currentTime;
-  logger.add(dateTime);                     // Log the date and time
 
-  // Print the timestamp to serial for debugging
-  Serial.print("Timestamp: ");
-  Serial.println(dateTime);
-
-  // Log other sensor data
+  logger.begin();
+  logger.add(dateTime);                                                 // date and time
   logger.add(EC.get_last_received_reading());                           // Conductivity
   logger.add(PH.get_last_received_reading());                           // pH
   logger.add(TM.get_last_received_reading());                           // Water temperature
