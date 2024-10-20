@@ -21,7 +21,7 @@ Ezo_board PH = Ezo_board(99, "PH");       // pH, address is 99 and name is "PH"
 Ezo_board EC = Ezo_board(100, "EC");      // Conductivity, address is 100 and name is "EC"
 Ezo_board TM = Ezo_board(102, "TM");      // water temp, address is 102 and name is "TM"
 DigitalConditionSensor floodSensor("FloodSensor", 7); //create a flood detection sensor object on pin 9
-DHT dht(8, DHT22);   //create a dht circut object on pin 8
+DHT dht(6, DHT22);   //create a dht circut object on pin 8
 
 RV8803 rtc; // Create an instance of the RV8803 RTC
 void step1();
@@ -76,7 +76,10 @@ void step2(){
 
   String floodDetection = floodSensor.get_last_received_reading() ? "HIGH" : "LOW";
 
-  String currentDate = rtc.stringDateUSA(); // Get the current date in mm/dd/yyyy format
+  float temp_hum_val[2] = {0};
+  dht.readTempAndHumidity(temp_hum_val);
+
+  String currentDate = rtc.stringDateUSA();// Get the current date in mm/dd/yyyy format
   String currentTime = rtc.stringTime();    // Get the current time in hh:mm:ss format
   String dateTime = currentDate + " " + currentTime;
   String csvLine = dateTime + "," 
@@ -84,11 +87,14 @@ void step2(){
   + String(PH.get_last_received_reading()) +","
   + String(EC.get_last_received_reading()) +","
    + floodDetection + ","
-   + String(batteryVoltage);
+   + String(batteryVoltage) +","
+   + String(temp_hum_val[1]) +","
+   + String(temp_hum_val[0]) +",";
   transmit(csvLine);
 }
 
 void loop()  {  
-Seq.run(); 
+Seq.run();
+delay(10000);
 }
 
