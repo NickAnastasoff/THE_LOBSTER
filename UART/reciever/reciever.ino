@@ -1,3 +1,4 @@
+// ESP32
 #define RXD1 18
 #define TXD1 17
 
@@ -11,4 +12,9 @@ void loop() {
     int inByte = Serial1.read();
     Serial.write(inByte);
   }
+  if (Serial.available()){
+    int inBytes = Serial.read();
+    Serial1.write(inBytes);
+  }
+
 }
