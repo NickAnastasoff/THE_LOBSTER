@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     // Save the CSV line to a file or process it as needed
     $file = fopen('test_data/fake_data.csv', 'a');
-    fwrite($file, $csvLine . "\n");
+    fwrite($file, $csvLine);
     fclose($file);
     
     // Respond back to the client (ESP32)

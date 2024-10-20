@@ -33,8 +33,6 @@ void setup()  {
   softSerial.begin(9600);
   Serial.begin(9600);
   Seq.reset(); 
-  Serial.println("3");
-
   dht.begin();
 
   rtc.begin();
@@ -42,7 +40,7 @@ void setup()  {
 } 
 
 void transmit(String output) {
-  softSerial.print(output);
+  softSerial.println(output);
 }
 void recieve(){
   if(softSerial.available()){
@@ -67,8 +65,7 @@ void step2(){
   Serial.println("");
   
   // Read the analog input from the BAT pin
-  //int sensorValue = analogRead(batteryPin);
-  int sensorValue = 23;
+  int sensorValue = analogRead(batteryPin);
   // Convert the ADC reading to voltage
   float batteryVoltage = (sensorValue / maxADC) * referenceVoltage;
 
@@ -79,16 +76,15 @@ void step2(){
 
   String currentDate = rtc.stringDateUSA();// Get the current date in mm/dd/yyyy format
   String currentTime = rtc.stringTime();    // Get the current time in hh:mm:ss format
-  // String dateTime = currentDate + currentTime;
-  String dateTime = "10/20/2024";
-  String csvLine = " "+dateTime + "," 
+  String dateTime = currentDate +" " + currentTime;
+  String csvLine = dateTime + "," 
   + String(TM.get_last_received_reading()) +","
   + String(PH.get_last_received_reading()) +","
   + String(EC.get_last_received_reading()) +","
    + floodDetection + ","
    + String(batteryVoltage) +","
    + String(temp_hum_val[1]) +","
-   + String(temp_hum_val[0]) +"";
+   + String(temp_hum_val[0]);
   transmit(csvLine);
   Serial.println(csvLine);
 }
