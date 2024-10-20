@@ -1,3 +1,4 @@
+//d2UgZWF0IHRoZSByYWRpdW0gc28gdGhlIGNsb2NrcyBkb250IGhhdmUgdG8=
 #include <SparkFun_RV8803.h>
 
 #include <SoftwareSerial.h>
@@ -69,7 +70,7 @@ void step2(){
   // Convert the ADC reading to voltage
   float batteryVoltage = (sensorValue / maxADC) * referenceVoltage;
 
-  String floodDetection = floodSensor.get_last_received_reading() ? "HIGH" : "LOW";
+  String floodDetection = floodSensor.get_last_received_reading() ? "1" : "0";
 
   float temp_hum_val[2] = {0};
   dht.readTempAndHumidity(temp_hum_val);
