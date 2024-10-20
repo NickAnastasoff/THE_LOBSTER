@@ -1,4 +1,4 @@
-//widen.wrought.shrunk.darkening
+// ESP32
 // run with php -S 0.0.0.0:8000
 
 #include <WiFi.h>
@@ -8,12 +8,15 @@
 const char* ssid = "TMOBILE-23E1";
 const char* password = "widen.wrought.shrunk.darkening";
 
-// Replace with the IP address or domain of your PHP server
-// Ensure to replace 'localhost' with the IP address of the server if running it locally
-const char* serverName = "http://192.168.12.204:8000/data_receiver.php";  // Replace with your actual server IP
+const char* serverName = "http://192.168.12.204:8000/data_receiver.php"; 
+
+#define RXD1 18
+#define TXD1 17
 
 void setup() {
   Serial.begin(9600);
+  Serial1.begin(9600, SERIAL_8N1, RXD1, TXD1);
+
 
   // Connect to Wi-Fi
   WiFi.begin(ssid, password);
@@ -22,10 +25,42 @@ void setup() {
     Serial.println("Connecting to WiFi...");
   }
   Serial.println("Connected to WiFi");
-
-  // Send a predefined CSV line to the server
-  sendCsvLine("2024-10-07 21:00:00,25.8,8.0,33.8,7,174.0");
 }
+
+void serialTransmit(String data) {
+  Serial1.print(data);
+}
+
+String serialRead() {
+  String receivedData = "";
+  while (Serial1.available()) {
+    char incomingByte = Serial1.read();
+    receivedData += incomingByte;
+  }
+  return receivedData;
+}
+
+void loop() {
+  // Read from Serial1 and send to Serial
+  String received = serialRead();
+  if (received.length() > 0) {
+    Serial.print(received);
+
+  sendCsvLine(received);
+  }
+
+  // Read from Serial and send to Serial1
+  if (Serial.available()) {
+    String inputString = "";
+    while (Serial.available()) {
+      char incomingByte = Serial.read();
+      inputString += incomingByte;
+    }
+    serialTransmit(inputString);
+  }
+}
+
+
 
 void sendCsvLine(String csvLine) {
   // Check Wi-Fi connection
@@ -57,7 +92,3 @@ void sendCsvLine(String csvLine) {
   }
 }
 
-void loop() {
-  // No need for repeated actions in the loop in this example
-  sendCsvLine("2024-10-07 21:00:00,25.8,8.0,33.8,7,174.0");
-}
