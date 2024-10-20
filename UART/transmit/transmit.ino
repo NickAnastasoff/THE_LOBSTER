@@ -1,3 +1,5 @@
+// ESP32
+
 #include <SoftwareSerial.h>
 SoftwareSerial softSerial(8, 9);  // RX, TX 
 void setup()  {
