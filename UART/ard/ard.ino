@@ -15,7 +15,7 @@ Ezo_board EC = Ezo_board(100, "EC");      // Conductivity, address is 100 and na
 Ezo_board TM = Ezo_board(102, "TM");      // water temp, address is 102 and name is "TM"
 DigitalConditionSensor floodSensor("FloodSensor", 9); //create a flood detection sensor object on pin 9
 DHT dht(8, DHT22);   //create a dht circut object on pin 8
-LOGGER_ENABLED = false;
+LOGGER_ENABLED = true;
 
 RV8803 rtc; // Create an instance of the RV8803 RTC
 
