@@ -1,0 +1,5 @@
+humdiddy yellow = 6 red = 5v black = gnd
+rtc red = 3v yellow =scl orange = sda brown = gnd
+flood red = 5v black =gnd white = 7
+esp32 orange = 17esp->8ard brown 18esp->3v3 voltage div
+voltage div purple = gnd brown = 3v3 blue = gnd green = 9

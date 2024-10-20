@@ -42,7 +42,7 @@ void setup()  {
 } 
 
 void transmit(String output) {
-  softSerial.println(output);
+  softSerial.print(output);
 }
 void recieve(){
   if(softSerial.available()){
@@ -62,9 +62,7 @@ void step1() {
 
 void step2(){
   receive_and_print_reading(PH);
-  Serial.println("");
   receive_and_print_reading(TM);
-  Serial.println("");
   receive_and_print_reading(EC);
   Serial.println("");
   
@@ -81,20 +79,22 @@ void step2(){
 
   String currentDate = rtc.stringDateUSA();// Get the current date in mm/dd/yyyy format
   String currentTime = rtc.stringTime();    // Get the current time in hh:mm:ss format
-  String dateTime = currentDate + " " + currentTime;
-  String csvLine = dateTime + "," 
+  // String dateTime = currentDate + currentTime;
+  String dateTime = "10/20/2024";
+  String csvLine = " "+dateTime + "," 
   + String(TM.get_last_received_reading()) +","
   + String(PH.get_last_received_reading()) +","
   + String(EC.get_last_received_reading()) +","
    + floodDetection + ","
    + String(batteryVoltage) +","
    + String(temp_hum_val[1]) +","
-   + String(temp_hum_val[0]) +",";
+   + String(temp_hum_val[0]) +"";
   transmit(csvLine);
+  Serial.println(csvLine);
 }
 
 void loop()  {  
 Seq.run();
-delay(10000);
+delay(3000);
 }
 
