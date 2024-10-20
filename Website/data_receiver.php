@@ -5,7 +5,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $csvLine = $_POST['csv_line'];
     
     // Save the CSV line to a file or process it as needed
-    $file = fopen('received_data.csv', 'a');
+    $file = fopen('test_data/fake_data.csv', 'a');
     fwrite($file, $csvLine . "\n");
     fclose($file);
     
