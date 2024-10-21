@@ -8,7 +8,7 @@ public:
     Logger(int chipSelectPin, const char *filename) {
         chipSelect = chipSelectPin;
         fileName = filename;
-        newLine = true;  // Indicates if it's the start of a new line
+        newLine = true;
     }
 
     void begin() {
@@ -62,7 +62,7 @@ public:
         }
     }
 
-    // Add support for any other type if necessary
+    // Add support for any other type
     template<typename T>
     void add(T value) {
         if (file) {
@@ -74,8 +74,8 @@ public:
     void endline() {
         if (file) {
             file.println();
-            file.flush();  // Ensures data is written to the card
-            newLine = true;  // Mark as start of a new line
+            file.flush();  
+            newLine = true;  
         }
     }
 
@@ -89,7 +89,7 @@ private:
     int chipSelect;
     const char *fileName;
     File file;
-    bool newLine;  // Flag to track if it is the start of a new line
+    bool newLine; 
 };
 
 #endif

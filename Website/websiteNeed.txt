@@ -1,3 +1,0 @@
-settings
-current readings
-graph over Time
