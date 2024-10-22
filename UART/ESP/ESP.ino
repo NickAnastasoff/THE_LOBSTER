@@ -5,8 +5,8 @@
 #include <HTTPClient.h>
 
 // set network ssid and key
-const char* ssid = "your network";
-const char* password = "your password";
+const char* ssid = "TMOBILE-23E1";
+const char* password = "widen.wrought.shrunk.darkening";
 
 const char* serverName = "http://192.168.12.204:8000/data_receiver.php"; 
 
