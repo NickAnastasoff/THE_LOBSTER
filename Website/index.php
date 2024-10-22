@@ -10,12 +10,16 @@ foreach ($data as &$row) {
     $row[5] = strtolower($row[5]) === 'yes' ? 1 : 0;
 }
 
-// Prepare data for the default chart (e.g., temperature)
-$dataPoints = [];
-foreach ($data as $row) {
-    $dateTime = strtotime($row[0]) * 1000;
-    $temperatureValue = (float)$row[1];  // Assuming column 1 is temperature
-    $dataPoints[] = array("x" => $dateTime, "y" => $temperatureValue);
+// Prepare data for each chart
+$chartsData = [];
+foreach (range(1, 7) as $columnIndex) {
+    $dataPoints = [];
+    foreach ($data as $row) {
+        $dateTime = strtotime($row[0]) * 1000;
+        $value = (float)$row[$columnIndex];
+        $dataPoints[] = array("x" => $dateTime, "y" => $value);
+    }
+    $chartsData[] = $dataPoints;
 }
 ?>
 
@@ -24,61 +28,69 @@ foreach ($data as $row) {
 <head>
 <script>
 var data = <?php echo json_encode($data); ?>;
+var chartsData = <?php echo json_encode($chartsData, JSON_NUMERIC_CHECK); ?>;
 
 window.onload = function () {
-    var chart = new CanvasJS.Chart("chartContainer", {
-    animationEnabled: true,
-    backgroundColor: "#2c2c2c",
-    title:{
-        text: "Temperature (C) Over Time",
-        fontColor: "#ffffff"
-    },
-    axisY: {
-        title: "Value",
-        titleFontColor: "#ffffff",
-        labelFontColor: "#ffffff",
-        gridColor: "#555555",
-        valueFormatString: "#0.##",
-    },
-    axisX: {
-        title: "Date & Time",
-        titleFontColor: "#ffffff",
-        labelFontColor: "#ffffff",
-        gridColor: "#555555",
-        valueFormatString: "YYYY-MM-DD HH:mm",
-    },
-    data: [{
-        type: "spline",
-        markerSize: 5,
-        xValueType: "dateTime",
-        dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>,
-        lineColor: "#00c3ff",
-        markerColor: "#00c3ff",
-    }]
-});
-    chart.render();
+    const chartTitles = [
+        "Temperature (C) Over Time",
+        "pH Level Over Time",
+        "EC Over Time",
+        "Flood Detection Over Time",
+        "Wattage Over Time",
+        "Air Temperature Over Time",
+        "Humidity Over Time"
+    ];
+    
+    const containerIds = [
+        "temperatureChart",
+        "phChart",
+        "ecChart",
+        "floodChart",
+        "wattageChart",
+        "airTempChart",
+        "humidityChart"
+    ];
 
-    // Event listener for changing chart data
-    document.getElementById('dataSelect').addEventListener('change', function() {
-        const columnIndex = parseInt(this.value);
-        const newDataPoints = getDataPoints(data, columnIndex);
-        chart.options.data[0].dataPoints = newDataPoints;
-        chart.options.title.text = this.options[this.selectedIndex].text + ' Over Time';
+    // Generate chart for each parameter
+    containerIds.forEach((containerId, index) => {
+        const chart = new CanvasJS.Chart(containerId, {
+            animationEnabled: true,
+            backgroundColor: "#2c2c2c",
+            title: {
+                text: chartTitles[index],
+                fontColor: "#ffffff"
+            },
+            axisY: {
+                title: "Value",
+                titleFontColor: "#ffffff",
+                labelFontColor: "#ffffff",
+                gridColor: "#555555",
+                valueFormatString: "#0.##",
+            },
+            axisX: {
+                title: "Date & Time",
+                titleFontColor: "#ffffff",
+                labelFontColor: "#ffffff",
+                gridColor: "#555555",
+                valueFormatString: "YYYY-MM-DD HH:mm",
+            },
+            data: [{
+                type: "spline",
+                markerSize: 5,
+                xValueType: "dateTime",
+                dataPoints: chartsData[index],
+                lineColor: "#00c3ff",
+                markerColor: "#00c3ff",
+            }]
+        });
         chart.render();
-    });
-}
-
-function getDataPoints(data, columnIndex) {
-    return data.map(row => {
-        const dateTime = new Date(row[0]).getTime();
-        let value = parseFloat(row[columnIndex]);
-        return { x: dateTime, y: value };
     });
 }
 </script>
 </head>
 <body style="background-color: #1e1e1e; color: #ffffff;">
     <h1 style="text-align: center;">Ocean Sensor Data Dashboard</h1>
+
     <div style="display: flex; justify-content: space-between; padding: 20px;">
         <div style="text-align: center; flex: 1; border: 1px solid #444; margin: 5px; padding: 10px;">
             <h2>Summary</h2>
@@ -91,16 +103,17 @@ function getDataPoints(data, columnIndex) {
             <p>Max Change: 0.5</p>
         </div>
     </div>
-    <h2 style="text-align: center;">Graph Data</h2>
-    <label for="dataSelect" style="padding-left: 20px;">Choose a parameter to graph:</label>
-    <select id="dataSelect" style="background-color: #333; color: #ffffff; border: 1px solid #555;">
-        <option value="1">Temperature (C)</option>
-        <option value="2">pH</option>
-        <option value="3">Salinity (ppt)</option>
-        <option value="4">Accelerometer (M)</option>
-    </select>
 
-    <div id="chartContainer" style="height: 400px; width: 90%; margin: 0 auto; padding: 20px;"></div>
+    <h2 style="text-align: center;">Graph Data</h2>
+
+    <div id="temperatureChart" style="height: 400px; width: 90%; margin: 0 auto; padding: 20px;"></div>
+    <div id="phChart" style="height: 400px; width: 90%; margin: 0 auto; padding: 20px;"></div>
+    <div id="ecChart" style="height: 400px; width: 90%; margin: 0 auto; padding: 20px;"></div>
+    <div id="floodChart" style="height: 400px; width: 90%; margin: 0 auto; padding: 20px;"></div>
+    <div id="wattageChart" style="height: 400px; width: 90%; margin: 0 auto; padding: 20px;"></div>
+    <div id="airTempChart" style="height: 400px; width: 90%; margin: 0 auto; padding: 20px;"></div>
+    <div id="humidityChart" style="height: 400px; width: 90%; margin: 0 auto; padding: 20px;"></div>
+
     <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 
     <!-- Option to download CSV -->
