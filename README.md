@@ -15,14 +15,14 @@ THE_LOBSTER collects sensor data from a drifter, sends it via LoRa to a base sta
   - [x] Develop code for reading pH values.
 
 - [ ] **Get gyroscope and accelerometer readings for wave height**  
-  - [x] Integrate a gyroscope and accelerometer (IMU).
-  - [x] Develop code for collecting IMU data.
+  - [ ] Integrate a gyroscope and accelerometer (IMU).
+  - [ ] Develop code for collecting IMU data.
   - [ ] Implement calculations to determine wave height based on sensor data.
   - [ ] Apply filtering techniques to reduce noise and enhance accuracy of wave height detection.
 
-- [ ] **Get wattage from solar**  
-  - [ ] Integrate a solar power
-  - [ ] Wire solar to data pins on arduino
+- [x] **Get wattage from solar**  
+  - [x] Integrate a solar power
+  - [x] Wire solar to data pins on arduino
   - [x] Develop code for reading wattage values.
 
 - [x] **Get temperature readings**  
@@ -30,7 +30,7 @@ THE_LOBSTER collects sensor data from a drifter, sends it via LoRa to a base sta
   - [x] Develop code for reading temperature values.
 
 - [x] **Get flood sensor readings**  
-  - [x] Integrate a flood (water level) sensor.
+  - [ ] Integrate a flood (water level) sensor.
   - [x] Develop code for detecting flood or presence of water.
 
 - [ ] **Get LoRa readings**  
@@ -54,9 +54,9 @@ THE_LOBSTER collects sensor data from a drifter, sends it via LoRa to a base sta
   - [ ] Add routines to handle data buffering and prevent overflow.
 
 ### 4. Website Integration
-- [ ] **Use PHP for Data Visualization**  
-  - [ ] Set up a PHP website to display data collected from the drifter.
-  - [ ] Use charts and gauges to display EC, pH, temperature, and wave height data.
+- [x] **Use PHP for Data Visualization**  
+  - [x] Set up a PHP website to display data collected from the drifter.
+  - [x] Use charts and gauges to display EC, pH, temperature, and wave height data.
   - [ ] Add features for historical data view and analysis.
 
 - [ ] **Drifter API**  
