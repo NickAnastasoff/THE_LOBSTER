@@ -1,5 +1,5 @@
 <?php
-$file = 'test_data/fake_data.csv';
+$file = 'data.csv';
 
 if (file_exists($file)) {
     // Set headers to force download

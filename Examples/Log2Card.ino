@@ -41,8 +41,7 @@ void loop() {
 void read() {
   PH.send_read_cmd();                      
   EC.send_read_cmd();
-  TM.send_read_cmd();
-  floodSensor.send_read_cmd();    
+  TM.send_read_cmd();  
   rtc.updateTime();  
 }
 
