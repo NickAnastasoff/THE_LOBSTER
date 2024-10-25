@@ -1,16 +1,11 @@
 <?php
-// Read the CSV file (adjust file path as needed)
-$data = array_map('str_getcsv', file('test_data/fake_data.csv'));
+// read csv
+$data = array_map('str_getcsv', file('data.csv'));
 
-// Extract headers
+// headers
 $headers = array_shift($data);
 
-// Convert Flood Detection from Yes/No to 1/0
-foreach ($data as &$row) {
-    $row[5] = strtolower($row[5]) === 'yes' ? 1 : 0;
-}
-
-// Prepare data for each chart
+// prepare data for each chart
 $chartsData = [];
 foreach (range(1, 7) as $columnIndex) {
     $dataPoints = [];
@@ -32,13 +27,13 @@ var chartsData = <?php echo json_encode($chartsData, JSON_NUMERIC_CHECK); ?>;
 
 window.onload = function () {
     const chartTitles = [
-        "Temperature (C) Over Time",
-        "pH Level Over Time",
-        "EC Over Time",
-        "Flood Detection Over Time",
-        "Wattage Over Time",
-        "Air Temperature Over Time",
-        "Humidity Over Time"
+        "Temperature (°C)",
+        "pH Level",
+        "EC (Micro Siemens)",
+        "Flood Detection",
+        "Wattage",
+        "Air Temperature",
+        "Humidity"
     ];
     
     const containerIds = [
@@ -116,7 +111,7 @@ window.onload = function () {
 
     <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 
-    <!-- Option to download CSV -->
+    <!--  download CSV -->
     <div style="text-align: center; padding: 20px;">
         <a href="download.php" style="background-color: #333; color: #ffffff; padding: 10px 20px; text-decoration: none; border: 1px solid #555;">Download CSV Data</a>
     </div>

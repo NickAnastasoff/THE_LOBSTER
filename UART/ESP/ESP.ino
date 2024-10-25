@@ -4,7 +4,7 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 
-// Replace with your network credentials
+// set network ssid and key
 const char* ssid = "TMOBILE-23E1";
 const char* password = "widen.wrought.shrunk.darkening";
 
@@ -18,7 +18,7 @@ void setup() {
   Serial1.begin(9600, SERIAL_8N1, RXD1, TXD1);
 
 
-  // Connect to Wi-Fi
+  // Connect to wifi
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
     delay(1000);
@@ -63,21 +63,21 @@ void loop() {
 
 
 void sendCsvLine(String csvLine) {
-  // Check Wi-Fi connection
+  // Check wifi connection
   if (WiFi.status() == WL_CONNECTED) {
     HTTPClient http;
-    http.begin(serverName);  // Specify the destination for the HTTP request
+    http.begin(serverName);  // set destitnation for http request
 
-    // Set the POST request content type
+    // set the post request content type
     http.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
-    // Prepare the POST request payload
+    // make the post request payload
     String postData = "csv_line=" + csvLine;
 
-    // Send the POST request
+    // Send the post request
     int httpResponseCode = http.POST(postData);
 
-    // Check the response
+    // check the response
     if (httpResponseCode > 0) {
       String response = http.getString();
       Serial.println("Response from server: " + response);
@@ -85,7 +85,7 @@ void sendCsvLine(String csvLine) {
       Serial.println("Error on sending POST: " + String(httpResponseCode));
     }
 
-    // Close the connection
+    // close the connection
     http.end();
   } else {
     Serial.println("WiFi Disconnected");
