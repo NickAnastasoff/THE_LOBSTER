@@ -13,13 +13,21 @@ enum msgType : int {
     IDLE
 }
 
+
+
 final String serialNumber = "5687";
 //identifying serial number for transmission
-volatile bool scanFlag = false;
-bool receiving = false;
 
+//start and end characters for transmission
 final char startChar = '<';
 final char endChar = '>';
+
+//header organization is startChar/Destination/MessageNum/MessageType
+//end organization is Path/endChar
+//path probably shouldnt be at the end but i dont feel like messing with ways to insert a substring
+
+volatile bool scanFlag = false;
+bool receiving = false;
 void setFlag(void) {
   // something happened, set the flag
   scanFlag = true;
